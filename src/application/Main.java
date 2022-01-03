@@ -19,7 +19,7 @@ public class Main extends Application {
 		try {
 			FXMLLoader loader=new FXMLLoader(getClass().getResource("/resources/view.fxml"));
 			Parent root = loader.load();
-			Scene scene = new Scene(root, 600, 320);
+			Scene scene = new Scene(root);	// new Scene(root, 600, 350);
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			stage.setScene(scene);
 			stage.setResizable(false);

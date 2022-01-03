@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 
 public class CarsRepositoryFile extends AbstractRepository<Car, Integer>{
 	private String filename;
+	
 	public CarsRepositoryFile(String filename){
 		this.filename=filename;
 		try {
@@ -15,6 +16,23 @@ public class CarsRepositoryFile extends AbstractRepository<Car, Integer>{
 			System.out.println(filename + " is empty");
 		}
 	}
+	
+	public CarsRepositoryFile() {
+		try {
+			Properties properties = new Properties();
+			properties.load(new FileInputStream("properties"));
+			String filename = properties.getProperty("filenameTXT");
+			if (filename == null){ //the property does not exist in the file
+				filename = "cars.txt";
+				System.err.println("Requests file not found. Using default " + filename);
+			}
+			this.filename = filename;
+			readFromFile();
+		}catch (IOException ex){
+			System.err.println("Error reading the configuration file" + ex);
+		}
+	}
+	
 	private void readFromFile(){
 		try(BufferedReader reader=new BufferedReader(new FileReader(filename))){
 			List<String> list = new ArrayList<>();

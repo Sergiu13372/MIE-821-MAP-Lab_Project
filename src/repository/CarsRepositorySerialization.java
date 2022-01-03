@@ -2,6 +2,7 @@ package repository;
 
 import java.io.*;
 import java.util.Map;
+import java.util.Properties;
 
 import repository.RepositoryException;
 import repository.CarsRepositoryFile;
@@ -13,6 +14,39 @@ public class CarsRepositorySerialization extends AbstractRepository<Car, Integer
 	public CarsRepositorySerialization(String filename) {
 		this.filename = filename;
 		readFromFile();
+	}
+	
+	public CarsRepositorySerialization() {
+		try {
+			Properties properties = new Properties();
+			properties.load(new FileInputStream("properties"));
+			String filename = properties.getProperty("filenameBYTES");
+			if (filename == null){ //the property does not exist in the file
+				filename = "cars.txt";
+				System.err.println("Requests file not found. Using default " + filename);
+			}
+			this.filename = filename;
+			readFromFile();
+		}catch (IOException ex){
+			System.err.println("Error reading the configuration file" + ex);
+		}
+	}
+	
+	public CarsRepositorySerialization(CarsRepositoryFile current_repo) {
+		try {
+			Properties properties = new Properties();
+			properties.load(new FileInputStream("properties"));
+			String filename = properties.getProperty("filenameBYTES");
+			if (filename == null){ //the property does not exist in the file
+				filename = "cars.txt";
+				System.err.println("Requests file not found. Using default " + filename);
+			}
+			this.filename = filename;
+		}catch (IOException ex){
+			System.err.println("Error reading the configuration file" + ex);
+		}
+		for(Car car : current_repo.findAll())
+			this.add(car);
 	}
 	
 	public CarsRepositorySerialization(CarsRepositoryFile current_repo, String filename) {

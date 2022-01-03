@@ -5,9 +5,9 @@ import cars.Car;
 import repository.*;
 
 public class Controller{
-	CarsRepositoryFile fileRepo = new CarsRepositoryFile("cars.txt");
+	CarsRepositoryFile fileRepo = new CarsRepositoryFile();
 	CarsRepository repo = new CarsRepository(fileRepo);
-	CarsRepositorySerialization serRepo = new CarsRepositorySerialization(fileRepo, "carsBytes.txt");
+	CarsRepositorySerialization serRepo = new CarsRepositorySerialization(fileRepo);
 	
 	private List<Car> getCarsList(CarsRepository current_repo) {
 		List<Car> carsList =  new ArrayList<Car>();

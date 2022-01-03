@@ -1,11 +1,9 @@
 package controller;
 
-import javafx.collections.ObservableList;
 import javafx.event.*;
 import javafx.fxml.*;
 import javafx.scene.*;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.*;
 
 import java.util.*;
@@ -13,6 +11,8 @@ import cars.Car;
 import repository.*;
 
 import java.math.*;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 public class ControllerGUI {
 	String options[] = { "1 . Remove car", "2 . Show car by id", "3 . Show cars", "4 . Print cars from specific Manufacturer",
@@ -23,13 +23,15 @@ public class ControllerGUI {
 	CarsRepositoryFile repo;
 	
 	@FXML
-	private ComboBox<String> optionsBox;
+	private ComboBox<String> optionsBox, optionsBoxRented;
     @FXML
-    private Button addCarButton, searchButton;
+    private Button addCarButton, searchButton, rentCarButton;
     @FXML
     private TextField mainTextField;
     @FXML
-    private TextArea textArea;
+    private TextArea textArea, textAreaRent;
+    @FXML
+    private DatePicker datePickerRent;
     
     @FXML
     public void comboBoxSelect(ActionEvent event) {
@@ -98,6 +100,21 @@ public class ControllerGUI {
     	} catch(Exception e) {
     		System.out.println(e + " Forcefully Closed");
     	}
+    }
+    
+    @FXML
+    public void comboBoxRentedSelect(ActionEvent event) {
+    	int ID = -1;
+    	String stringID = "";
+    	
+    	try {
+	    	stringID = optionsBoxRented.getValue().split(": ")[1].split(",")[0];
+	    	ID = Integer.parseInt(stringID);
+    	} catch(Exception e) {
+    		System.out.println(e + " Forcefully Closed");
+    	}
+    	
+    	System.out.println("ComboBoxRented opened with id:" + stringID);
     }
     
     @FXML
@@ -228,6 +245,22 @@ public class ControllerGUI {
     	  }
     }
     
+    @FXML
+    public void rentCar(ActionEvent event) {
+    	try {
+	    	LocalDate date = datePickerRent.getValue();
+	    	DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/M/yyyy");
+	    	String strDate = date.format(formatter);
+	    	System.out.println("Hello rent car button " + strDate);
+    	}
+    	catch(Exception e) {
+    		String oldText = textAreaRent.getText();    		
+    		textAreaRent.setText("!!! Please select a Date !!!");
+//    		Thread.sleep(2000);
+    		textAreaRent.setText(oldText);
+    	}
+    }
+    
     public Double roundDoubleToTwo(Double value) {
         BigDecimal bd = new BigDecimal(value).setScale(2, RoundingMode.HALF_UP);
         double result = bd.doubleValue();
@@ -239,8 +272,28 @@ public class ControllerGUI {
     	optionsBox.setValue("Please choose:");
     	mainTextField.setDisable(true);
     	
-    	repo = new CarsRepositoryFile("cars.txt");
+    	repo = new CarsRepositoryFile();	
+    	
+    	initializeUnrentedCars(repo);
 	}
+    
+    public void initializeUnrentedCars(CarsRepositoryFile repo) {
+    	List<String> unrentedCars = new ArrayList<String>();
+    	
+    	for(Car car : repo.findAll()) {
+    		if(car.isRented() == false) {
+	    		String carText = "" + car;
+	    		unrentedCars.add(carText);
+    		}
+    	}
+    	
+    	String[] unrentedCarsString = new String[unrentedCars.size()];
+    	unrentedCars.toArray(unrentedCarsString);
+    	
+    	optionsBoxRented.getItems().addAll(unrentedCarsString);
+    	optionsBoxRented.setValue("Choose car");
+    	
+    }
     
     public void addCarObj(Car car) {
     	repo.add(car);
