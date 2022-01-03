@@ -33,6 +33,24 @@ public class ControllerGUI {
     @FXML
     private DatePicker datePickerRent;
     
+    public void popUpError(String errorMessage) {
+    	try {
+    	    FXMLLoader loader = new FXMLLoader(getClass().getResource("/resources/error.fxml"));
+    	    Parent root2 = (Parent) loader.load();
+    	    Stage stage = new Stage();
+    	    
+    	    ControllerGUIError controllerGUIError = loader.getController();
+    	    controllerGUIError.initialize(this, errorMessage);
+    	    
+    	    stage.setTitle(errorMessage);
+    	    stage.setScene(new Scene(root2));
+    	    stage.show();
+    	    
+    	  } catch(Exception ee) {
+    	    System.out.println(ee + " Can not open " + errorMessage);
+    	  }
+    }
+    
     @FXML
     public void comboBoxSelect(ActionEvent event) {
     	try {
@@ -132,6 +150,7 @@ public class ControllerGUI {
 	    			mainTextField.setPromptText("Write the ID of the car");
 	    		}catch(Exception e) {
 	    			mainTextField.setPromptText("Not valid ID");
+	    			popUpError("Not a valid ID");
 	    		}
 	    		this.removeCar(ID);
 	    		mainTextField.setText("");
@@ -146,6 +165,7 @@ public class ControllerGUI {
 	    			mainTextField.setPromptText("Write the ID of the car");
 	    		}catch(Exception e) {
 	    			mainTextField.setPromptText("Not valid ID");
+	    			popUpError("Not a valid ID");
 	    		}
 	    		this.printCarByID(ID);
 	    		mainTextField.setText("");
@@ -159,8 +179,10 @@ public class ControllerGUI {
 	    		manufacturer = mainTextField.getText();
 	    		if(manufacturer != "")
 	    			this.printCarsFromManufacturer(manufacturer);
-	    		else
+	    		else {
 	    			mainTextField.setPromptText("Write the Manufacturer please");
+    				popUpError("Write the Manufacturer please");
+    				}
 	    		mainTextField.setText("");
 	    		break;
 	    	case 5:
@@ -171,6 +193,8 @@ public class ControllerGUI {
 	    			this.printCarsNewerOrOlderThan(year, true);
 	    		}catch(Exception e) {
 	    			mainTextField.setPromptText("Write a year please");
+    				popUpError("Write a year please");
+	    			
 	    		}
 	    		//mainTextField.setText("");
 	    		break;
@@ -182,6 +206,7 @@ public class ControllerGUI {
 	    			this.printCarsNewerOrOlderThan(year, false);
 	    		}catch(Exception e) {
 	    			mainTextField.setPromptText("Write a year please");
+    				popUpError("Write a year please");
 	    		}
 	    		//mainTextField.setText("");
 	    		break;
@@ -190,8 +215,10 @@ public class ControllerGUI {
 	    		String model = mainTextField.getText();
 	    		if(model != "")
 	    			this.printPricesForSpecificModels(model);
-	    		else
+	    		else {
 	    			mainTextField.setPromptText("Write the Manufacturer please");
+					popUpError("Write a year please");
+					}
 	    		mainTextField.setText("");
 	    		break;
 	    	case 8:
@@ -199,8 +226,10 @@ public class ControllerGUI {
 	    		manufacturer = mainTextField.getText();
 	    		if(manufacturer != "")
 	    			this.printYearsFromManufacturer(manufacturer);
-	    		else
+	    		else {
 	    			mainTextField.setPromptText("Write the Manufacturer please");
+					popUpError("Write the Manufacturer please");
+					}
 	    		mainTextField.setText("");
 	    		break;
 	    	case 9:
@@ -208,8 +237,10 @@ public class ControllerGUI {
 	    		manufacturer = mainTextField.getText();
 	    		if(manufacturer != "")
 	    			this.printSumFromManufacturer(manufacturer);
-	    		else
+	    		else {
 	    			mainTextField.setPromptText("Write the Manufacturer please");
+	    			popUpError("Write the Manufacturer please");
+					}
 	    		mainTextField.setText("");
 	    		break;
 	    	case 10:
@@ -254,10 +285,7 @@ public class ControllerGUI {
 	    	System.out.println("Hello rent car button " + strDate);
     	}
     	catch(Exception e) {
-    		String oldText = textAreaRent.getText();    		
-    		textAreaRent.setText("!!! Please select a Date !!!");
-//    		Thread.sleep(2000);
-    		textAreaRent.setText(oldText);
+    		popUpError("Invalid Date");
     	}
     }
     
