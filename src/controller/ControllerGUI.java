@@ -19,7 +19,7 @@ public class ControllerGUI {
 						"5 . Print cars newer than X year", "6 . Print cars older than X year", "7 . Print prices for specific car model", 
 						"8 . Print years of cars from specific Manufacturer", "9 . Print sum of cars from Manufacturer", "10 . Print all Manufacturers", "11 . Print cheapest Car"};
 	
-	int choice = 0;
+	int choice = 0, ID = -1;
 	CarsRepositoryFile repo;
 	
 	@FXML
@@ -43,6 +43,7 @@ public class ControllerGUI {
     	    controllerGUIError.initialize(this, errorMessage);
     	    
     	    stage.setTitle(errorMessage);
+			stage.setResizable(false);
     	    stage.setScene(new Scene(root2));
     	    stage.show();
     	    
@@ -122,7 +123,6 @@ public class ControllerGUI {
     
     @FXML
     public void comboBoxRentedSelect(ActionEvent event) {
-    	int ID = -1;
     	String stringID = "";
     	
     	try {
@@ -268,6 +268,7 @@ public class ControllerGUI {
 			controllerGUIAddCar.initialize(this);
     	    
     	    stage.setTitle("Car");
+			stage.setResizable(false);
     	    stage.setScene(new Scene(root1));
     	    stage.show();
     	    
@@ -278,15 +279,33 @@ public class ControllerGUI {
     
     @FXML
     public void rentCar(ActionEvent event) {
+    	Car car;
     	try {
-	    	LocalDate date = datePickerRent.getValue();
-	    	DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/M/yyyy");
-	    	String strDate = date.format(formatter);
-	    	System.out.println("Hello rent car button " + strDate);
+    		car = repo.findById(ID);
+    		try {
+    	    	LocalDate date = datePickerRent.getValue();
+    	    	if(date.isBefore(LocalDate.now())) {
+    	    		popUpError("Date is in the past");
+    	    		return;
+    	    	}
+    	    	DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/M/yyyy");
+    	    	String strDate = date.format(formatter);
+    	    	
+    	    	car.setRented(true);
+    	    	car.setRented_date(strDate);
+    	    	repo.update(car, ID);
+    	    	
+    	    	initializeUnrentedCars(repo);
+        	}
+        	catch(Exception e) {
+    			popUpError("Invalid Date");
+        	}
     	}
     	catch(Exception e) {
-    		popUpError("Invalid Date");
-    	}
+    		popUpError("Please choose a Car");
+    	}	
+    	
+    	ID = -1;
     }
     
     public Double roundDoubleToTwo(Double value) {
@@ -306,20 +325,26 @@ public class ControllerGUI {
 	}
     
     public void initializeUnrentedCars(CarsRepositoryFile repo) {
+    	optionsBoxRented.getItems().clear();
     	List<String> unrentedCars = new ArrayList<String>();
+    	String rentedCarsString = "";
     	
     	for(Car car : repo.findAll()) {
     		if(car.isRented() == false) {
 	    		String carText = "" + car;
 	    		unrentedCars.add(carText);
     		}
+    		else {
+	    		rentedCarsString += car + "\n";
+    		}
     	}
     	
     	String[] unrentedCarsString = new String[unrentedCars.size()];
     	unrentedCars.toArray(unrentedCarsString);
-    	
     	optionsBoxRented.getItems().addAll(unrentedCarsString);
-    	optionsBoxRented.setValue("Choose car");
+    	optionsBoxRented.setValue("Please Choose Car:");
+    	
+    	textAreaRent.setText(rentedCarsString);
     	
     }
     

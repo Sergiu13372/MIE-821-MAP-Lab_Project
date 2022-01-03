@@ -64,7 +64,7 @@
                <children>
                   <AnchorPane layoutX="49.0" layoutY="14.0" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <ComboBox fx:id="optionsBoxRented" layoutY="41.0" onAction="#comboBoxRentedSelect" prefHeight="25.0" prefWidth="162.0" promptText="Choose Car" style="-fx-background-color: #00bfff;">
+                        <ComboBox fx:id="optionsBoxRented" layoutX="-13.0" layoutY="2.0" onAction="#comboBoxRentedSelect" prefHeight="25.0" prefWidth="162.0" promptText="Choose Car" style="-fx-background-color: #00bfff;">
                            <effect>
                               <InnerShadow>
                                  <color>
@@ -75,8 +75,8 @@
                         </ComboBox>
                      </children>
                   </AnchorPane>
-                  <DatePicker fx:id="datePickerRent" layoutX="236.0" layoutY="57.0" />
-                  <Button fx:id="rentCarButton" layoutX="444.0" layoutY="54.0" mnemonicParsing="false" onAction="#rentCar" prefHeight="25.0" prefWidth="90.0" style="-fx-background-color: #00FF00;" text="Rent Car" textAlignment="CENTER">
+                  <DatePicker fx:id="datePickerRent" editable="false" layoutX="223.0" layoutY="15.0" />
+                  <Button fx:id="rentCarButton" layoutX="452.0" layoutY="13.0" mnemonicParsing="false" onAction="#rentCar" prefHeight="25.0" prefWidth="90.0" style="-fx-background-color: #00FF00;" text="Rent Car" textAlignment="CENTER">
                      <font>
                         <Font name="Century Gothic Bold" size="16.0" />
                      </font>
@@ -88,7 +88,7 @@
                         </InnerShadow>
                      </effect>
                   </Button>
-                  <TextArea fx:id="textAreaRent" layoutX="34.0" layoutY="104.0" prefHeight="180.0" prefWidth="508.0">
+                  <TextArea fx:id="textAreaRent" layoutX="34.0" layoutY="65.0" prefHeight="219.0" prefWidth="508.0">
                      <effect>
                         <InnerShadow blurType="GAUSSIAN" choke="0.34" height="50.31" radius="24.655" width="50.31">
                            <color>
