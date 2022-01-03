@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+
+<AnchorPane prefHeight="218.0" prefWidth="200.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ControllerGUIAddCar">
+   <children>
+      <Pane prefHeight="227.0" prefWidth="200.0" style="-fx-background-color: #dbd8d0;">
+         <children>
+            <Button fx:id="addCarButton" defaultButton="true" layoutX="71.0" layoutY="182.0" mnemonicParsing="false" onAction="#addCarButton" prefWidth="59.0" text="Add Car" />
+            <Label layoutX="43.0" layoutY="14.0" text="ID:" />
+            <TextField fx:id="fieldID" alignment="CENTER" layoutX="107.0" layoutY="14.0" prefHeight="25.0" prefWidth="80.0" promptText="10" />
+            <Label layoutX="14.0" layoutY="40.0" text="Manufacturer:" />
+            <TextField fx:id="fieldManufacturer" alignment="CENTER" layoutX="107.0" layoutY="40.0" prefHeight="25.0" prefWidth="80.0" promptText="Audi" />
+            <Label layoutX="32.0" layoutY="66.0" text="Model:" />
+            <Label layoutX="19.0" layoutY="92.0" text="Max Speed:" />
+            <Label layoutX="37.0" layoutY="118.0" text="Price" />
+            <Label layoutX="38.0" layoutY="144.0" text="Year" />
+            <TextField fx:id="fieldModel" alignment="CENTER" layoutX="107.0" layoutY="66.0" prefHeight="25.0" prefWidth="80.0" promptText="TT" />
+            <TextField fx:id="fieldSpeed" alignment="CENTER" layoutX="107.0" layoutY="92.0" prefHeight="25.0" prefWidth="80.0" promptText="230" />
+            <TextField fx:id="fieldPrice" alignment="CENTER" layoutX="107.0" layoutY="118.0" prefHeight="25.0" prefWidth="80.0" promptText="1500" />
+            <TextField fx:id="fieldYear" alignment="CENTER" layoutX="107.0" layoutY="144.0" prefHeight="25.0" prefWidth="80.0" promptText="2003" />
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>
