@@ -4,7 +4,9 @@ import javafx.event.*;
 import javafx.fxml.*;
 import javafx.scene.*;
 import javafx.scene.control.*;
+import javafx.scene.text.Text;
 import javafx.stage.*;
+import javafx.util.Duration;
 
 import java.util.*;
 import cars.Car;
@@ -21,6 +23,7 @@ public class ControllerGUI {
 	
 	int choice = 0, ID = -1;
 	CarsRepositoryFile repo;
+	private boolean isRentedDate = false;
 	
 	@FXML
 	private ComboBox<String> optionsBox, optionsBoxRented;
@@ -32,6 +35,12 @@ public class ControllerGUI {
     private TextArea textArea, textAreaRent;
     @FXML
     private DatePicker datePickerRent;
+    @FXML
+    private CheckBox rentedCarsCheckBox;
+    @FXML
+    private Text rentedCarsText;
+    @FXML
+    private Tooltip toolTipCheckBox;
     
     public void popUpError(String errorMessage) {
     	try {
@@ -282,24 +291,20 @@ public class ControllerGUI {
     	Car car;
     	try {
     		car = repo.findById(ID);
-    		try {
-    	    	LocalDate date = datePickerRent.getValue();
-    	    	if(date.isBefore(LocalDate.now())) {
-    	    		popUpError("Date is in the past");
-    	    		return;
-    	    	}
-    	    	DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/M/yyyy");
-    	    	String strDate = date.format(formatter);
-    	    	
-    	    	car.setRented(true);
-    	    	car.setRented_date(strDate);
-    	    	repo.update(car, ID);
-    	    	
-    	    	initializeUnrentedCars(repo);
-        	}
-        	catch(Exception e) {
-    			popUpError("Invalid Date");
-        	}
+	    	LocalDate date = datePickerRent.getValue();
+	    	if(date.isBefore(LocalDate.now())) {
+	    		datePickerRent.setValue(null);
+	    		popUpError("Date is in the past");
+	    		return;
+	    	}
+	    	DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/M/yyyy");
+	    	String strDate = date.format(formatter);
+	    	
+	    	car.setRented(true);
+	    	car.setRented_date(strDate);
+	    	repo.update(car, ID);
+	    	
+	    	initializeUnrentedCars(repo);
     	}
     	catch(Exception e) {
     		popUpError("Please choose a Car");
@@ -307,7 +312,40 @@ public class ControllerGUI {
     	
     	ID = -1;
     }
+
+    public void checkBoxPressed(ActionEvent event) {
+    	if(optionsBoxRented.isDisabled() == false) {
+    		datePickerRent.setValue(null);
+    		textAreaRent.setText("Please choose a Date above");
+    		isRentedDate = true;
+    		optionsBoxRented.setDisable(true);
+    		rentCarButton.setDisable(true);
+    		rentedCarsText.setText("Rented Cars on specific Date");
+    	}
+    	else {
+    		isRentedDate = false;
+    		optionsBoxRented.setDisable(false);
+    		rentCarButton.setDisable(false);
+    		initializeUnrentedCars(repo);
+    		rentedCarsText.setText("Rented Cars");
+    	}
+    }
     
+    public void datePickAction(ActionEvent event) {
+    	if(isRentedDate == true) {
+	    	LocalDate date = datePickerRent.getValue();
+	    	if(date.isBefore(LocalDate.now())) {
+	    		datePickerRent.setValue(null);
+	    		popUpError("Date is in the past");
+	    		return;
+	    	}
+	    	DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/M/yyyy");
+	    	String strDate = date.format(formatter);
+	    	
+	    	initializeRentedCarsOnDate(strDate);
+		}
+    }
+ 
     public Double roundDoubleToTwo(Double value) {
         BigDecimal bd = new BigDecimal(value).setScale(2, RoundingMode.HALF_UP);
         double result = bd.doubleValue();
@@ -315,6 +353,9 @@ public class ControllerGUI {
     }
     
     public void initialize() {
+    	toolTipCheckBox.setShowDelay(Duration.millis(200));
+    	toolTipCheckBox.setHideDelay(Duration.millis(200));
+    	
     	optionsBox.getItems().addAll(options);
     	optionsBox.setValue("Please choose:");
     	mainTextField.setDisable(true);
@@ -335,7 +376,7 @@ public class ControllerGUI {
 	    		unrentedCars.add(carText);
     		}
     		else {
-	    		rentedCarsString += car + "\n";
+	    		rentedCarsString += car + "\n\n";
     		}
     	}
     	
@@ -346,6 +387,20 @@ public class ControllerGUI {
     	
     	textAreaRent.setText(rentedCarsString);
     	
+    }
+    
+    public void initializeRentedCarsOnDate(String date) {
+    	textAreaRent.setText("");
+    	String rentedCarsString = "";
+    	
+    	for(Car car : repo.findAll()) {
+    		if(car.isRented() == true) {
+    			if(car.getRented_date().equals(date)) {
+    				rentedCarsString += car + "\n\n";
+    			}
+    		}
+    	}
+    	textAreaRent.setText(rentedCarsString);
     }
     
     public void addCarObj(Car car) {
@@ -392,7 +447,7 @@ public class ControllerGUI {
     	String s = "";
 		
 		for(Car car : repo.findAll()) {
-			s = s + car + "\n";
+			s = s + car + "\n\n";
 		}
 		if(s == "")
 			textArea.setText("Nothing");
@@ -408,7 +463,7 @@ public class ControllerGUI {
 		carsList.stream()
 			.filter(c -> c.getManufacturer().startsWith(manufacturer))
 			.forEach(c ->{
-				builder.append(c + "\n");
+				builder.append(c + "\n\n");
 			});
         
         String concatenatedString = builder.toString();
@@ -432,13 +487,13 @@ public class ControllerGUI {
 			carsList.stream()
 				.filter(c -> Integer.parseInt(c.getManufacturing_year()) > Year)
 				.forEach(c ->{
-					builder.append(c + "\n");
+					builder.append(c + "\n\n");
 				});
 		else
 			carsList.stream()
 			.filter(c -> Integer.parseInt(c.getManufacturing_year()) < Year)
 			.forEach(c ->{
-				builder.append(c + "\n");
+				builder.append(c + "\n\n");
 			});
     	String concatenatedString = builder.toString();
     	String str = "";
@@ -461,7 +516,7 @@ public class ControllerGUI {
 			.filter(c -> c.getModel().startsWith(model))
 			.map(cm -> cm.getPrice())
 			.forEach(c ->{
-				builder.append(c + " euros\n");
+				builder.append(c + " euros\n\n");
 			});
 		String concatenatedString = builder.toString();
 		String str = "";
@@ -473,7 +528,7 @@ public class ControllerGUI {
 		if(str == "")
 			textArea.setText("Nothing");
 		else
-			str = model + " prices are: \n" + str;
+			str = model + " prices are: \n\n" + str;
 			textArea.setText(str);
     }
     
@@ -485,7 +540,7 @@ public class ControllerGUI {
 			.filter(c -> c.getManufacturer().startsWith(manufacturer))
 			.map(cm -> cm.getManufacturing_year())
 			.forEach(c ->{
-				builder.append(c + "\n");
+				builder.append(c + "\n\n");
 			});
 		String concatenatedString = builder.toString();
         String str = manufacturer + ": ";
@@ -523,7 +578,7 @@ public class ControllerGUI {
 			.map(cm -> cm.getManufacturer())
 			.distinct()
 			.forEach(c ->{
-				builder.append(c + "\n");
+				builder.append(c + "\n\n");
 			});
 		
 		String concatenatedString = builder.toString();
