@@ -9,7 +9,7 @@
 8;Lexus;Ls-300;230;12100.0;2012;true;12/1/2022
 9;Acura;NSX;270;10500.0;2005;true;23/12/2022
 10;Porsche;Cayenne;220;1000.0;2006;true;23/12/2022
-11;Ford;Focus;180;1100.0;2004;false;null
+11;Ford;Focus;180;1100.0;2004;true;12/1/2022
 12;Subaru;Forester;200;1500.0;2005;false;null
 13;Renault;Megane;200;1000.0;2001;false;null
 14;Volkswagen;Bora;200;1100.0;2003;false;null
