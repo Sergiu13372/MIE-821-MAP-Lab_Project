@@ -2,7 +2,7 @@
 The Laboratory Project for M.A.P. for UBB Cluj, Year2, semester1
 
 
-Add this Project to either your Eclipse ENV or IntelliJ ENV that have JavaFX installed and run it
+Add this Project to either your Eclipse ENV or IntelliJ ENV that has JavaFX installed and run it
 
 The app looks like this:
 
@@ -30,14 +30,23 @@ Once there, all of the Rented Cars will be loaded in the text area:
 While all of the Unrented Cars will be loaded in the "Please Choose Car:"
 ![image](https://user-images.githubusercontent.com/94149803/148079271-3aead597-cb2f-44b3-8bb5-c5f091eb17a7.png)
 
-Once you choose a car, you can pick a date in the date picker next to it ![image](https://user-images.githubusercontent.com/94149803/148079350-2aa86476-7446-4dfb-b06c-e2ff59c07949.png), and after that, you can press on "Rent Car" ![image](https://user-images.githubusercontent.com/94149803/148079391-350d2798-b246-4b85-8cd1-dff4951a5e20.png)
+Once you choose a car, you can pick a date in the date picker next to it 
+
+![image](https://user-images.githubusercontent.com/94149803/148079350-2aa86476-7446-4dfb-b06c-e2ff59c07949.png)
+, and after that, you can press on "Rent Car" ![image](https://user-images.githubusercontent.com/94149803/148079391-350d2798-b246-4b85-8cd1-dff4951a5e20.png)
+
 And now that Car will be added to the list of Rented Cars and removed from the list of Unrented Cars
 
 By pressing the check box in the middle:
+
 ![image](https://user-images.githubusercontent.com/94149803/148079546-609fd50a-23dd-43a0-8720-44f9f67cf4f0.png)
+
 You will now switch to "Rented Cars on specific Date"
+
 ![image](https://user-images.githubusercontent.com/94149803/148079596-6d9b4ffd-6003-4a45-9385-4eac6a5a2986.png)
+
 Now, if you pick a date from the date picker, all of the Rented Cars from that day will be displayed in the Text Area
+
 ![image](https://user-images.githubusercontent.com/94149803/148079663-d7ad279b-8e99-469d-a9da-8c72e859664b.png)
 
 That is about it, have fun!
