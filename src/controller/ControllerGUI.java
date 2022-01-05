@@ -400,7 +400,13 @@ public class ControllerGUI {
     			}
     		}
     	}
-    	textAreaRent.setText(rentedCarsString);
+    	
+    	if(rentedCarsString.equals("")) {
+    		textAreaRent.setText("No cars rented on " + date);
+    	}
+    	else {
+    		textAreaRent.setText("Rented cars on " + date + " are:\n\n" + rentedCarsString);
+    	}
     }
     
     public void addCarObj(Car car) {
@@ -570,6 +576,7 @@ public class ControllerGUI {
 			textArea.setText(str);
 		}
 	}
+    
     public void printManufacturers() {
     	List<Car> carsList = this.getCarsList(repo);
 		final StringBuilder builder = new StringBuilder();
