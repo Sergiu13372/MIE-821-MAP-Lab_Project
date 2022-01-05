@@ -2,6 +2,8 @@
 
 package application;
 
+import java.io.File;
+
 import controller.ControllerGUI;
 import javafx.application.Application;
 import javafx.event.EventHandler;
@@ -10,6 +12,7 @@ import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 
 public class Main extends Application {
 	boolean isStarted = false;
@@ -21,6 +24,8 @@ public class Main extends Application {
 			Parent root = loader.load();
 			Scene scene = new Scene(root);	// new Scene(root, 600, 350);
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+//			System.out.println("Working Directory = " + System.getProperty("user.dir"));
+	        stage.getIcons().add(new Image(new File("src/resources/logo.png").toURI().toString()));
 			stage.setScene(scene);
 			stage.setResizable(false);
 			stage.show();

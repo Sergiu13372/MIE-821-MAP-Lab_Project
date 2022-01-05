@@ -4,6 +4,7 @@ import javafx.event.*;
 import javafx.fxml.*;
 import javafx.scene.*;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.text.Text;
 import javafx.stage.*;
 import javafx.util.Duration;
@@ -12,6 +13,7 @@ import java.util.*;
 import cars.Car;
 import repository.*;
 
+import java.io.File;
 import java.math.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -50,8 +52,9 @@ public class ControllerGUI {
     	    
     	    ControllerGUIError controllerGUIError = loader.getController();
     	    controllerGUIError.initialize(this, errorMessage);
-    	    
-    	    stage.setTitle(errorMessage);
+
+	        stage.getIcons().add(new Image(new File("src/resources/warning.png").toURI().toString()));
+    	    stage.setTitle("Error");
 			stage.setResizable(false);
     	    stage.setScene(new Scene(root2));
     	    stage.show();
@@ -275,7 +278,8 @@ public class ControllerGUI {
     	    
 			ControllerGUIAddCar controllerGUIAddCar = loader.getController();
 			controllerGUIAddCar.initialize(this);
-    	    
+
+	        stage.getIcons().add(new Image(new File("src/resources/logo.png").toURI().toString()));
     	    stage.setTitle("Car");
 			stage.setResizable(false);
     	    stage.setScene(new Scene(root1));
