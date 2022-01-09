@@ -1,4 +1,4 @@
-# MIE-822-MAP-Lab_Project
+# MIE-821-MAP-Lab_Project
 The Laboratory Project for M.A.P. for UBB Cluj, Year2, semester1
 
 
