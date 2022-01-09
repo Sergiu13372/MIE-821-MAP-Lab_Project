@@ -1,5 +1,5 @@
 0;Renault;Clio;160;1500.0;2005;true;12/1/2022
-1;Saab;9-4;194;3000.0;2001;false;null
+1;Saab;9-4;200;3500.0;2001;false;n/a
 2;Ram;Duallie;175;4100.0;2004;false;null
 3;Nissan;Navara;175;2500.0;2005;true;12/1/2022
 4;GMC;Pickup;175;4000.0;2001;false;null
@@ -11,7 +11,7 @@
 10;Porsche;Cayenne;220;1000.0;2006;true;23/12/2022
 11;Ford;Focus;180;1100.0;2004;true;12/1/2022
 12;Subaru;Forester;200;1500.0;2005;false;null
-13;Renault;Megane;200;1000.0;2001;false;null
+13;Renault;Megane;200;1000.0;2001;true;13/1/2022
 14;Volkswagen;Bora;200;1100.0;2003;false;null
 15;Nissan;S14;250;1500.0;1992;false;null
 16;Porsche;Panamera;250;15000.0;2010;false;null

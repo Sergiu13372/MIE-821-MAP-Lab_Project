@@ -8,11 +8,12 @@ import javafx.stage.Stage;
 
 public class ControllerGUIError {
 	ControllerGUI controller = new ControllerGUI();
+	ControllerGUIAddCar controllerAddCar = new ControllerGUIAddCar();
 	
     @FXML
     private Button errorOkButton;
     @FXML
-    private Text textError;
+    private Label textError;
     
     @FXML
     public void errorButton(ActionEvent event){
@@ -22,6 +23,10 @@ public class ControllerGUIError {
     
     public void initialize(ControllerGUI givenController, String error) {
     	controller = givenController;
+    	textError.setText(error);
+    }
+    public void initialize(ControllerGUIAddCar givenController, String error) {
+    	controllerAddCar = givenController;
     	textError.setText(error);
     }
 }
