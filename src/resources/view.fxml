@@ -49,7 +49,7 @@
                         </InnerShadow>
                      </effect>
                   </Button>
-                  <TextArea fx:id="textArea" layoutX="34.0" layoutY="82.0" prefHeight="180.0" prefWidth="508.0" wrapText="true">
+                  <TextArea fx:id="textArea" editable="false" layoutX="34.0" layoutY="82.0" prefHeight="180.0" prefWidth="508.0" wrapText="true">
                      <effect>
                         <InnerShadow blurType="GAUSSIAN" choke="0.34" height="50.31" radius="24.655" width="50.31">
                            <color>
@@ -91,7 +91,7 @@
                         </InnerShadow>
                      </effect>
                   </Button>
-                  <TextArea fx:id="textAreaRent" layoutX="34.0" layoutY="85.0" prefHeight="199.0" prefWidth="508.0" wrapText="true">
+                  <TextArea fx:id="textAreaRent" editable="false" layoutX="34.0" layoutY="85.0" prefHeight="199.0" prefWidth="508.0" wrapText="true">
                      <effect>
                         <InnerShadow blurType="GAUSSIAN" choke="0.34" height="50.31" radius="24.655" width="50.31">
                            <color>
