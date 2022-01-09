@@ -58,7 +58,7 @@ public class ControllerGUIAddCar {
     
     @FXML
     public void addCarButton(ActionEvent event){
-        int ID = 0;
+        int ID = -1;
 		String manufacturer = "";
 		String model = "";
 		int speed = 0;

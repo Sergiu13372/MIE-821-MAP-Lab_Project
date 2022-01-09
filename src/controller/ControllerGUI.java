@@ -296,10 +296,15 @@ public class ControllerGUI {
     	try {
     		car = repo.findById(ID);
 	    	LocalDate date = datePickerRent.getValue();
-	    	if(date.isBefore(LocalDate.now())) {
-	    		datePickerRent.setValue(null);
-	    		popUpError("Date is in the past");
-	    		return;
+	    	try {
+		    	if(date.isBefore(LocalDate.now())) {
+		    		datePickerRent.setValue(null);
+		    		popUpError("Date is in the past");
+		    		return;
+		    	}
+	    	}
+	    	catch(Exception e) {
+	    		System.out.println("Wrong date chosen");
 	    	}
 	    	DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/M/yyyy");
 	    	String strDate = date.format(formatter);
@@ -338,16 +343,21 @@ public class ControllerGUI {
     public void datePickAction(ActionEvent event) {
     	if(isRentedDate == true) {
 	    	LocalDate date = datePickerRent.getValue();
-	    	if(date.isBefore(LocalDate.now())) {
-	    		datePickerRent.setValue(null);
-	    		popUpError("Date is in the past");
-	    		return;
+	    	try {
+		    	if(date.isBefore(LocalDate.now())) {
+		    		datePickerRent.setValue(null);
+		    		popUpError("Date is in the past");
+		    		return;
+		    	}
+		    	DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/M/yyyy");
+		    	String strDate = date.format(formatter);
+		    	
+		    	initializeRentedCarsOnDate(strDate);
 	    	}
-	    	DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/M/yyyy");
-	    	String strDate = date.format(formatter);
-	    	
-	    	initializeRentedCarsOnDate(strDate);
-		}
+	    	catch(Exception e) {
+	    		System.out.println("Wrong date chosen");
+	    	}
+	    }
     }
  
     public Double roundDoubleToTwo(Double value) {
